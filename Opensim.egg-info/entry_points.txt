@@ -1,0 +1,3 @@
+[console_scripts]
+simrun = sim.__main__:main
+
