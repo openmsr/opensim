@@ -1,0 +1,14 @@
+# Compiled objects and modules
+*.a
+*.o
+*.log
+*.out
+
+# Compiler python objects
+*.pyc
+
+# Opensim distribution
+Opensim.egg-info/
+
+# Source build
+build

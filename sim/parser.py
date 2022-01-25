@@ -10,7 +10,7 @@ def parse_arg():
     parser.add_argument('h5mfilename',
                         metavar='path',
                         type=Path,
-                        help='the path to h5m_filename')
+                        help='the path to h5m file')
 
     parser.add_argument('-r', '--runmode',
                         action='store',
@@ -102,16 +102,17 @@ def parse_arg():
                         default='icru',
                         help='''
                             Detector material for dose calculation.
-                            Default is ICRU.
+                            Default is ICRU tissue composition.
                             ''')
 
     parser.add_argument('--detvol',
                         action='store',
                         type=float,
-                        default=90092.59,
+                        default=68508.936,
                         help='''
                             Detector volume.
-                            Default is [cm3], volume of phantom human body.
+                            Default is 68508.936[cm3], volume CAD phantom
+                            human body.
                             ''')
 
     parser.add_argument('--particle',

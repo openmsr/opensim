@@ -103,7 +103,6 @@ class make_post:
                 data_frame = score.get_pandas_dataframe()
                 values = np.array(data_frame["mean"])
                 plane = score.name.split('_')[1]
-
                 if plane == 'xy':
                     values=values.reshape([abs(self.coredim[1])
                                          + abs(self.coredim[4]),
@@ -146,8 +145,13 @@ class make_post:
                         cmap='RdBu',
                         label=score_name
                         )
+
+                if score_name == 'flux':
+                    units = '[particle-cm/s]'
+                else:
+                    units = '[reactions/s]'
                 cbar = plt.colorbar(pos,ax=ax)
-                cbar.ax.set_ylabel(f'{score_name}', rotation=270)
+                cbar.ax.set_ylabel(units, rotation=270, labelpad=15)
                 ax.set_xlabel(f'{plane[0]} [cm]')
                 ax.set_ylabel(f'{plane[1]} [cm]')
                 ax.set_title(f'{score_name}_{plane}')
