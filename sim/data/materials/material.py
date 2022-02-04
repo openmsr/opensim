@@ -6,7 +6,15 @@ from pathlib import Path
 
 
 def read_csv_material_files(material_data):
-    path =  Path(__file__).parent / material_data
+
+    #check for default library, else use provided path
+    path =  Path(__file__).parent
+    if material_data in os.listdir(path):
+        path =  Path(__file__).parent / material_data
+    else:
+        path = material_data
+
+    #get csv files
     _files = []
     for file in os.listdir(path):
         if file.endswith('.csv'):
