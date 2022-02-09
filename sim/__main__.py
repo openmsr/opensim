@@ -10,7 +10,7 @@ def main(args=None):
     geom = model.set_geom(mats)
     tally = model.set_tally(mats)
     sett = model.set_setting()
-    res = model.model_run(mats,geom,tally,sett)
+    res = model.model_run(geom,mats,sett,tally)
     model.set_post(res)
 
 if __name__ == "__main__":
