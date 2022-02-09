@@ -54,7 +54,7 @@ def make_openmc_material(readfiles):
         else:
             msg = (
                 f'Not valid column name for file {namefile}'
-                f'column name {readfile.columns[2]} is meither "ao" not "wo"')
+                f'column name {readfile.columns[2]} is neither "ao" nor "wo"')
             raise ValueError(msg)
 
         if 's_alpha_beta' in readfile.columns:

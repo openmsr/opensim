@@ -59,9 +59,19 @@ def parse_arg():
 
     parser.add_argument('--materialdata',
                         action='store',
-                        choices=['msre','are','onion','calandria'],
+                        choices=['msre','are','onion','calandria','zpre'],
                         default='msre',
-                        help='Reactor materials data')
+                        help='''
+                            Reactor materials data. Available with opensim:
+                                - msre
+                                - are
+                                - onion
+                                - calandria
+                                - zpre
+                            Otherwise, looks for xml or csv files in absolute
+                            filepath provided.
+                            Defaults to msre.
+                             '''')
 
     parser.add_argument('--meshscores',
                         action='store',
