@@ -13,7 +13,8 @@ generate a H5M file from a CAD geometry and software requirements,
 please visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
 
 # How to run
-The package can be launched from the command-line typing "simrun" followed by some
+
+The package can be launched from the command-line typing "simrun" followed by some 
 command-line options. If no command-line options are provided, default values are taken.
 
 A previously generated DAGMC .h5m geometry file needs to be provided as
@@ -66,6 +67,7 @@ See simrun --help for details on optional arguments.
   --power POWER         Reactor thermal power [MW] for units conversion.    
                         Default: 100
   --calcdose            If provided, calculate dose on defined detector.
+
   --detmat DETMAT       Detector material for dose calculation.
                         Default: ICRU tissue composition.
   --detvol DETVOL       Detector volume.
@@ -75,6 +77,16 @@ See simrun --help for details on optional arguments.
                         Particles to simulate.
                         Default: coupled neutron-photon transport.
   --calcreac            If provided, calculate reaction rates on specified
+  --detmat DETMAT       Detector material for dose calculation. 
+                        Default: ICRU tissue composition.
+  --detvol DETVOL       Detector volume. 
+                        Default is 68508.936 [cm3], corresponing to the
+                        volume of GrabCAD human phantom.
+  --particle {neutron,photon} [{neutron,photon} ...]
+                        Particles to simulate. 
+                        Default: coupled neutron-photon transport.
+  --calcreac            If provided, calculate reaction rates on specified 
+
                         materials.
   --reacmat REACMAT [REACMAT ...]
                         Material names where to calculate reaction rates.                  
