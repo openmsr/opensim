@@ -79,7 +79,7 @@ class def_model:
         settings.export_to_xml()
         return settings
 
-    def model_run(self,mats,geom,tallies,settings):
+    def model_run(self,geom,mats,settings,tallies):
         model = openmc.model.Model(geom,mats,settings,tallies)
         statepoint = model.run()
         return statepoint

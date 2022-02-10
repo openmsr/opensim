@@ -16,7 +16,8 @@ setup(
     include_package_data = True,
     package_data = {
         'sim.data.materials.msre': ['*.csv'],
-        'sim.data.materials.are': ['*.csv']
+        'sim.data.materials.are': ['*.csv'],
+        'sim.data.materials.zpre': ['*.csv']
     },
 
     entry_points={
