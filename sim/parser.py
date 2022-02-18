@@ -59,9 +59,17 @@ def parse_arg():
 
     parser.add_argument('--materialdata',
                         action='store',
-                        choices=['msre','are','onion','calandria'],
+                        choices=['msre','are','zpre'],
                         default='msre',
-                        help='Reactor materials data')
+                        help='Reactor materials data. Defaults to MSRE')
+
+    parser.add_argument('--localdata',
+                        action='store',
+                        default=None,
+                        help='''
+                            Path to local reactor materials data.
+                            Can be .xml or .csv.
+                            ''')
 
     parser.add_argument('--meshscores',
                         action='store',
