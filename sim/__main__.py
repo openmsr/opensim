@@ -16,7 +16,7 @@ def main(args=None):
     model.set_post(res)
 
     #save simulation arguments in a txt file
-    with open('sim_args.txt', 'w') as f:
+    with open('sim_inputs.txt', 'w') as f:
         f.write(str(parse_arg()))
 
 if __name__ == "__main__":
