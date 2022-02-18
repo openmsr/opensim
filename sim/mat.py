@@ -7,68 +7,49 @@ from .data.materials.material import read_csv_material_files, make_openmc_materi
 
 class define_mat:
 
-    def __init__(self,material_data):
+    def __init__(self,material_data,local_data):
         self.material_data = material_data
+        self.local_data = local_data
 
     def create_material_xml(self):
-        default_mats = ['msre','are','onion','calandria','zpre']
 
         # create xml files from default libs
-        if self.localdata is None:
+        if self.local_data is None:
             readmat = read_csv_material_files(self.material_data)
             mats = openmc.Materials([mat for mat in make_openmc_material(readmat)])
 
         # read materials in provided directory, preference to xml files
         else:
-            filenames = os.listdir(self.localdata)
+            filenames = os.listdir(self.local_data)
 
             if not filenames:
-                msg = (f'{self.localdata} is an empty directory')
+                msg = (f'{self.local_data} is an empty directory')
                 raise Exception(msg)
 
-            # sort by type
-            csv_files = [os.path.splitext(f)[0] for f in filenames if f.endswith('.csv')]
-            xml_files = [os.path.splitext(f)[0] for f in filenames if f.endswith('.xml')]
-
-            # if all are .csv files
-            if not xml_files:
-                if not csv_files:
-                    msg = (f'material files must be .csv or .xml')
-                    raise Exception(msg)
-                else:
-                    _files = [(f,pd.read_csv(f)) for f in filenames]
-                    mats = openmc.Materials([mat for mat in make_openmc_material(_files)])
-
-            # if all are .xml files
-            elif not csv_files:
-                if not xml_files:
-                    msg = (f'material files must be .csv or .xml')
+        # we only want one material.xml file with all materials, otherwise confusing
+            xml = [os.path.join(self.local_data,f) for f in filenames if f.endswith('.xml')]
+            if len(xml) == 1:
+                if not mats.from_xml(xml[0]):
+                    msg = (f'{xml[0]} is not a material.xml')
                     raise Exception(msg)
                 else:
                     mats = openmc.Materials()
-                    for f in filenames:
-                        new_mat = openmc.Materials()
-                        new_mat.from_xml(f)
-                        new_mat = new_mat[0]
-                        mats.append(new_mat)
-
-            # if both, prefer xml
+                    mats = mats.from_xml(xml[0])
+            #assuming material files are either .csv, .txt or/and .xlsx
             else:
                 mats = openmc.Materials()
                 for f in filenames:
-                    size = len(f)
-                    raw = f[:size-4]
-                    if raw in xml_files:
-                        new_mat = openmc.Materials()
-                        new_mat.from_xml(f)
-                        new_mat = new_mat[0]
-                        mats.append(new_mat)
-                    elif raw in csv_files:
-                        _file = [(f,pd.read_csv(f))]
-                        mats.append(openmc.Materials(make_openmc_material(_file))[0])
+                    f = os.path.join(self.local_data,f)
+                    if f.endswith('.csv'):
+                        _mat = [(f,pd.read_csv(f))]
+                    elif f.endswith('.xlsx'):
+                        _mat = [(f,pd.read_excel(f))]
+                    elif f.endswith('.txt'):
+                        _mat = [(f,pd.read_csv(f))]
                     else:
-                        msg = (f'material files must be .csv or .xml')
-                        raise Exception(msg)
+                        #can add other extensions later
+                        continue
+                    mats.append(openmc.Materials(make_openmc_material(_mat))[0])
 
-        mats.export_to_xml
+        mats.export_to_xml()
         return mats

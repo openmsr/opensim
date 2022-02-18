@@ -11,7 +11,8 @@ class def_model:
         self.args = args
 
     def set_mat(self):
-        mat = define_mat(self.args.materialdata)
+        mat = define_mat(self.args.materialdata,
+                         self.args.localdata)
         mat_xml = mat.create_material_xml()
         return mat_xml
 
