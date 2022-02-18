@@ -7,9 +7,10 @@ import argparse
 def parse_arg():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('h5mfilename',
-                        metavar='path',
+    parser.add_argument('--h5mfilename',
+                        action='store',
                         type=Path,
+                        default=None,
                         help='the path to h5m file')
 
     parser.add_argument('-r', '--runmode',
@@ -65,6 +66,7 @@ def parse_arg():
 
     parser.add_argument('--localdata',
                         action='store',
+                        type=Path,
                         default=None,
                         help='''
                             Path to local reactor materials data.
