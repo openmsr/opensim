@@ -1,24 +1,30 @@
-This Python package automatically runs OpenMC Monte Carlo transport simulation
-code [OpenMC](https://github.com/openmc-dev/openmc) with CAD based geometry.
+This Python package runs fully automatized OpenMC (Monte Carlo transport
+code [OpenMC](https://github.com/openmc-dev/openmc)) simulations, with CAD based
+geometries.
 
 # Installation
 
 ```bash
+git clone https://github.com/openmsr/opensim.git
 pip install opensim/
 ```
 
 # Usage
-To run OpenMC with this package a geometry H5M file is needed. To learn how to
-generate a H5M file from a CAD geometry and software requirements,
-please visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
+To run OpenMC with this package a H5M geometrical model is needed.
+To learn how to generate H5M files from CAD geometries and software required,
+visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
 
 # How to run
 
-The package can be launched from the command-line typing "simrun" followed by some 
-command-line options. If no command-line options are provided, default values are taken.
+Once installed, the package can be launched anywhere from the command-line typing
+"simrun" followed by some command-line options. If no command-line options are
+provided, default values are passed.
 
-A previously generated DAGMC .h5m geometry file needs to be provided as
+A previously generated DAGMC .h5m geometry file location needs to be provided as
 positional argument.
+
+Local material definitions can be provided as .xml .csv or .xmls, othwerwise
+defualt material libraries, built with the package, are used. 
 
 # Arguments
 See simrun --help for details on optional arguments.
@@ -57,6 +63,8 @@ See simrun --help for details on optional arguments.
                         Reactor materials data tables
                         Choices: 'msre','are', 'zpre'
                         Default: msre
+  --localdata           Path to local reactor materials data.
+                        Can be .xml .csv or .xmls
   --meshscores {flux,absorption,fission} [{flux,absorption,fission} ...]
                         Mesh scores to tally on planes
                         Default: 'flux','absorption','fission'
@@ -77,25 +85,25 @@ See simrun --help for details on optional arguments.
                         Particles to simulate.
                         Default: coupled neutron-photon transport.
   --calcreac            If provided, calculate reaction rates on specified
-  --detmat DETMAT       Detector material for dose calculation. 
+  --detmat DETMAT       Detector material for dose calculation.
                         Default: ICRU tissue composition.
-  --detvol DETVOL       Detector volume. 
+  --detvol DETVOL       Detector volume.
                         Default is 68508.936 [cm3], corresponing to the
                         volume of GrabCAD human phantom.
   --particle {neutron,photon} [{neutron,photon} ...]
-                        Particles to simulate. 
+                        Particles to simulate.
                         Default: coupled neutron-photon transport.
-  --calcreac            If provided, calculate reaction rates on specified 
+  --calcreac            If provided, calculate reaction rates on specified
 
                         materials.
   --reacmat REACMAT [REACMAT ...]
                         Material names where to calculate reaction rates.                  
 
 ```
-# MSRE example
+# Malten Salt Reactor Experiment (MSRE) example
 Will run msre.h5m geometry file, with 100000 particles and 100 batches. Coredim takes the
 dimension of the reactor vessel for initializing neutron distribution. Providing plotgeom argument
-will plot the geometry on xy,yz,zx planes (by deafult) during "run" mode. The MSRE material data tables are passed.
+will plot the geometry on xy,yz,zx planes (by deafult) during "run" mode. The MSRE defautl material data are passed.
 Meshscores argument will score provided tallies on the default planes.
 
 ```bash
