@@ -24,15 +24,15 @@ A previously generated DAGMC .h5m geometry file location needs to be provided as
 positional argument.
 
 Local material definitions can be provided as .xml .csv or .xmls, othwerwise
-defualt material libraries, built with the package, are used. 
+defualt material libraries, built with the package, are used.
 
 # Arguments
 See simrun --help for details on optional arguments.
 
-- Positional arguments:
+- Mandatory arguments:
 
 ```bash
-  path                  the path to a .h5m file
+  --h5mfilename         Path to the .h5m file
 ```
 
 - Optional arguments:
