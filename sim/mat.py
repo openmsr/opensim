@@ -27,17 +27,16 @@ class define_mat:
                 raise Exception(msg)
 
         # we only want one material.xml file with all materials, otherwise confusing
+            mats = openmc.Materials()
             xml = [os.path.join(self.local_data,f) for f in filenames if f.endswith('.xml')]
             if len(xml) == 1:
                 if not mats.from_xml(xml[0]):
                     msg = (f'{xml[0]} is not a material.xml')
                     raise Exception(msg)
                 else:
-                    mats = openmc.Materials()
                     mats = mats.from_xml(xml[0])
             #assuming material files are either .csv, .txt or/and .xlsx
             else:
-                mats = openmc.Materials()
                 for f in filenames:
                     f = os.path.join(self.local_data,f)
                     if f.endswith('.csv'):
