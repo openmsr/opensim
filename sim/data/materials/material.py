@@ -27,7 +27,7 @@ def make_openmc_material(readfiles):
         #Add enrichment only to atom percent definitions
         if 'enrichment' in readfile.columns:
             #store enrichmetn indexes
-            enr_idx = [index for index,i in enumerate(df["enrichment"]) if not np.isnan(i)]
+            enr_idx = [index for index,i in enumerate(readfile["enrichment"]) if not np.isnan(i)]
         else:
             enr_idx = []
 
