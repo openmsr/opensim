@@ -5,13 +5,12 @@ geometries.
 # Installation
 
 ```bash
-git clone https://github.com/openmsr/opensim.git
-pip install opensim/
+pip install opensim
 ```
 
 # Usage
-To run OpenMC with this package a H5M geometrical model is needed.
-To learn how to generate H5M files from CAD geometries and software required,
+To run OpenMC with this package a .h5m meshed geometrical model is needed.
+To learn how to generate H5M meshes from CAD geometries and software required,
 visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
 
 # How to run
@@ -20,11 +19,15 @@ Once installed, the package can be launched anywhere from the command-line typin
 "simrun" followed by some command-line options. If no command-line options are
 provided, default values are passed.
 
-A previously generated DAGMC .h5m geometry file location needs to be provided as
-positional argument.
+A DAGMC ".h5m" mesh geometry file needs to be provided, at least, to be able to
+run the package.
 
-Local material definitions can be provided as .xml .csv or .xmls, othwerwise
-defualt material libraries, built with the package, are used.
+Material libraries are built with the package for 3 molten salt reactors:
+- the Molten Salt Reactor Experimen (msre),
+- the Aircraft Reactor Experiment (are) and
+- the Zero Power Reactor Experiment (zpre))
+
+Materials can also be defined locally as xml, csv or .xmlx files.
 
 # Arguments
 See simrun --help for details on optional arguments.
@@ -101,7 +104,7 @@ See simrun --help for details on optional arguments.
 
 ```
 # Malten Salt Reactor Experiment (MSRE) example
-Will run msre.h5m geometry file, with 100000 particles and 100 batches. Coredim takes the
+Runs msre.h5m mesh file with 100000 neutrons particles and 100 batches. Coredim takes the
 dimension of the reactor vessel for initializing neutron distribution. Providing plotgeom argument
 will plot the geometry on xy,yz,zx planes (by deafult) during "run" mode. The MSRE defautl material data are passed.
 Meshscores argument will score provided tallies on the default planes.
@@ -110,3 +113,4 @@ Meshscores argument will score provided tallies on the default planes.
 simrun msre.h5m -p 1000000 -b 100 --coredim -75 -75 0 75 75 250 --plotgeom
 --materialdata msre --meshscores flux absorption fission
 ```
+For further details see the "example" folder.
