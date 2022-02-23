@@ -22,12 +22,12 @@ provided, default values are passed.
 A DAGMC ".h5m" mesh geometry file needs to be provided, at least, to be able to
 run the package.
 
-Material libraries are built with the package for 3 molten salt reactors:
-- the Molten Salt Reactor Experimen (msre),
-- the Aircraft Reactor Experiment (are) and
-- the Zero Power Reactor Experiment (zpre))
+Standard material libraries are built directly within the package, for three molten salt reactors:
+- Molten Salt Reactor Experiment (msre)
+- Aircraft Reactor Experiment (are)
+- Zero Power Reactor Experiment (zpre)
 
-Materials can also be defined locally as xml, csv or .xmlx files.
+Alternatively, materials can be defined locally as xml, csv or .xlsx files.
 
 # Arguments
 See simrun --help for details on optional arguments.
@@ -103,7 +103,7 @@ See simrun --help for details on optional arguments.
                         Material names where to calculate reaction rates.                  
 
 ```
-# Malten Salt Reactor Experiment (MSRE) example
+# Malten Salt Reactor Experiment (msre) example
 Runs msre.h5m mesh file with 100000 neutrons particles and 100 batches. Coredim takes the
 dimension of the reactor vessel for initializing neutron distribution. Providing plotgeom argument
 will plot the geometry on xy,yz,zx planes (by deafult) during "run" mode. The MSRE defautl material data are passed.
@@ -113,4 +113,4 @@ Meshscores argument will score provided tallies on the default planes.
 simrun msre.h5m -p 1000000 -b 100 --coredim -75 -75 0 75 75 250 --plotgeom
 --materialdata msre --meshscores flux absorption fission
 ```
-For further details see the "example" folder.
+For further details on how to run the msre and a download for the h5m file, see the "example" folder.
