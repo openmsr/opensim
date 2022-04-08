@@ -6,6 +6,7 @@ import openmc.lib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import json
 from math import pi
 from .scripts.find_tally import find_tallies_by_name
 
@@ -71,6 +72,30 @@ class make_post:
                         )[0].mean.mean()
         strength = self.power/(1.602*10**(-19) * heating_rate)
         return strength
+
+    def plot_spectrum(self,sp,strength):
+        fig, ax = plt.subplots()
+        df=pd.DataFrame()
+        for spectrum in find_tallies_by_name(sp,'spectrum'):
+            if json.loads(spectrum.name.split("_")[-2]):
+                _df = spectrum.get_pandas_dataframe()
+                _df["cell_name"]=spectrum.name.split("_")[-1]
+                df=df.append(_df)
+            else:
+                continue
+        for name in df["cell_name"].unique():
+            _df=df[df["cell_name"]==name]
+            en = _df.groupby("energy low [eV]")["energy low [eV]"].mean().ravel()
+            mean = _df.groupby("energy low [eV]")["mean"].mean().ravel()
+            std = _df.groupby("energy low [eV]")["std. dev."].mean().ravel()
+            ax.plot(en/1e6, mean*strength,label=name, drawstyle='steps-post')
+        ax.set_xlabel('Energy [MeV]')
+        ax.set_ylabel('Flux [n/cm-eV-s]')
+        ax.set_xscale('log')
+        ax.legend()
+        ax.grid(True, which='both')
+        plt.title('neutron spectrum')
+        plt.savefig("spectrum",dpi=600)
 
     def calc_dose(self,sp,strength):
         dose_list =[]

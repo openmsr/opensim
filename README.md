@@ -5,24 +5,24 @@ geometries.
 # Installation
 
 ```bash
-pip install opensim
+git clone https://github.com/openmsr/opensim.git
+cd opensim
+pip install .
 ```
 
 # Usage
-To run OpenMC with this package a .h5m meshed geometrical model is needed.
-To learn how to generate H5M meshes from CAD geometries and software required,
-visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
+To run OpenMC with this package a .h5m meshed model is needed.
+To learn how to generate H5M meshes from CAD geometries with Cubit and DAGMC
+please visit: [DAGMC website](https://svalinn.github.io/DAGMC/).
 
 # How to run
 
-Once installed, the package can be launched anywhere from the command-line typing
+Once installed, the package can be launched from anywhere by simply typing
 "simrun" followed by some command-line options. If no command-line options are
-provided, default values are passed.
+provided, default values are passed. As minimum an .h5m mesh file needs to
+be passed to run the package.
 
-A DAGMC ".h5m" mesh geometry file needs to be provided, at least, to be able to
-run the package.
-
-Standard material libraries are built directly within the package, for three molten salt reactors:
+Standard material libraries are built directly within the package, for 3 molten salt reactors:
 - Molten Salt Reactor Experiment (msre)
 - Aircraft Reactor Experiment (are)
 - Zero Power Reactor Experiment (zpre)
@@ -40,7 +40,6 @@ See simrun --help for details on optional arguments.
 
 - Optional arguments:
 ```bash
-  -h, --help            show this help message and exit
 
   -r {run,plot-geom}, --runmode {run,plot-geom}
                         Choices: "run" or "plot-geometry"

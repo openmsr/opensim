@@ -1,5 +1,7 @@
 import openmc
 import openmc.lib
+import numpy as np
+from math import log10
 import sys
 from .scripts.h5m_cell_id import get_h5m_volumes
 
@@ -46,6 +48,19 @@ class define_tally:
         leak.filters = [mesh_filter]
         leak.scores = ['current']
         tallies.append(leak)
+        return tallies
+
+    def create_spectrum_tally(self,tallies,mats):
+        energies = np.logspace(log10(1e-5), log10(20.0e6), 501)
+        energy_filter = openmc.EnergyFilter(energies)
+        cell_ids=[]
+        for mat in mats:
+            cell_id = get_h5m_volumes([self.h5mfilename,mat.name])
+            cell_filter = openmc.CellFilter(cell_id)
+            spectrum = openmc.Tally(name=f'spectrum_{cell_id}_{mat.name}')
+            spectrum.filters = [energy_filter,cell_filter]
+            spectrum.scores = ['flux']
+            tallies.append(spectrum)
         return tallies
 
     def create_strenght(sp,tallies):

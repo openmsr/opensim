@@ -11,7 +11,7 @@ def parse_arg():
                         action='store',
                         type=Path,
                         default=None,
-                        help='the path to h5m file')
+                        help='the path to a h5m file')
 
     parser.add_argument('-r', '--runmode',
                         action='store',
@@ -47,8 +47,8 @@ def parse_arg():
                         nargs='+',
                         default=['xy','yz','xz'],
                         help='''
-                            2D-Planes for geometry plotting and mesh tallies
-                            if 'vox' argument provided, 3D-voxels are made
+                            2D-Planes for geometry plotting and mesh tallies.
+                            If 'vox' argument provided, 3D-voxels are made
                             for ParaView vtk visualization.
                              ''')
 
@@ -91,6 +91,11 @@ def parse_arg():
                             upper x, upper y, upper z.
                             By default 'msre' reactor core dimension.
                               ''')
+    parser.add_argument('--coreradius',
+                        action='store',
+                        type=float,
+                        default=100,
+                        help='Reactor core radius [cm]')
 
     parser.add_argument('--power',
                         action='store',

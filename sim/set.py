@@ -1,4 +1,5 @@
 import os, sys
+from math import pi
 import openmc
 from .geom import define_geom
 from .mat import define_mat
@@ -44,6 +45,7 @@ class def_model:
         tallies = tally.create_keff_tally(tallies)
         tallies = tally.create_leak_tally(tallies)
         tallies = tally.create_strenght(tallies)
+        tallies = tally.create_spectrum_tally(tallies,mat_xml)
 
         if self.args.calcreac:
             tallies = tally.create_rates_tally(tallies,mat_xml)
@@ -68,10 +70,11 @@ class def_model:
         settings.batches = self.args.batches
         settings.inactive = self.args.inactive
         settings.particles = self.args.particles
-        source_area = openmc.stats.Box([i for i in self.args.coredim][0:3],
-                                       [i for i in self.args.coredim][3:6],
-                                       only_fissionable = True)
-        settings.source = openmc.Source(space=source_area)
+        r = openmc.stats.Uniform(0.0, self.args.coreradius)
+        phi = openmc.stats.Uniform(0, 2*pi)
+        theta = openmc.stats.Uniform(0, pi)
+        uniform_dist = openmc.stats.SphericalIndependent(r,theta,phi)
+        settings_file.source = openmc.source.Source(space=uniform_dist)
 
         if 'photon' in self.args.particle:
             settings.photon_transport = True
@@ -93,6 +96,7 @@ class def_model:
         sp = post.get_tally(resfile)
         post.calc_keff(sp)
         strength = post.calc_strenght(sp)
+        post.plot_spectrum(sp,strength)
 
         if self.args.calcreac:
             post.calc_rates(sp,strength)
