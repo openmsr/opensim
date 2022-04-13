@@ -74,7 +74,7 @@ class def_model:
         phi = openmc.stats.Uniform(0, 2*pi)
         theta = openmc.stats.Uniform(0, pi)
         uniform_dist = openmc.stats.SphericalIndependent(r,theta,phi)
-        settings_file.source = openmc.source.Source(space=uniform_dist)
+        settings.source = openmc.source.Source(space=uniform_dist)
 
         if 'photon' in self.args.particle:
             settings.photon_transport = True
